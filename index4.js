@@ -74,11 +74,8 @@ function renderUI() {
   const input = renderInput();
   renderCountsBox();
   renderLeftTime();
-
   calcCountsWhenWordsMatched(input);
-
   renderAndMoveNodes();
-
   countLeftTime();
 }
 
