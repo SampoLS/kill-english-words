@@ -1,4 +1,5 @@
 const root = document.getElementById("root");
+const leftTimer = 60000;
 const timer = 100;
 const elSize = 0;
 const wordsSize = 23;
@@ -34,73 +35,92 @@ const letters = [
 ];
 
 function startGame() {
-  const button = document.createElement("button");
-  button.textContent = "Go";
-  button.className = "go";
-  document.body.appendChild(button);
-
+  const button = renderStartBtn();
   button.addEventListener("click", () => {
-    main();
-    const id = setTimeout(() => {
-      document.body.removeChild(root);
-      clearTimeout(id);
-      console.log('removed all nodes in root');
-
-      showScore();
-    }, 60000);
+    renderUI();
+    clearNodes();
     document.body.removeChild(button);
   });
 }
 
 startGame();
 
-function main() {
+function clearNodes() {
+  const id = setTimeout(() => {
+    document.body.removeChild(root);
+    clearTimeout(id);
+    console.log("removed all nodes in root");
+    showScore();
+    const button = renderStartBtn();
+    button.addEventListener("click", () => {
+      document.body.removeChild(button);
+      document.body.appendChild(root);
+      renderAndMoveNodes();
+      countLeftTime();
+    });
+  }, leftTimer);
+}
+
+function renderStartBtn() {
+  const button = document.createElement("button");
+  button.textContent = "Go";
+  button.className = "go";
+  document.body.appendChild(button);
+
+  return button;
+}
+
+function renderUI() {
   const input = renderInput();
   renderCountsBox();
   renderLeftTime();
 
   calcCountsWhenWordsMatched(input);
 
+  renderAndMoveNodes();
+
+  countLeftTime();
+}
+
+function renderAndMoveNodes() {
   for (let i = 0; i < 3; i++) {
     const span = renderNodes(i);
     moveNodes(span, i);
   }
-
-  countLeftTime()
 }
 
 function showScore() {
-  const box = document.createElement('section');
-  const span = document.createElement('span');
-  const counts = document.getElementById('counts');
-  box.className = 'score-box';
-  box.textContent = 'Congrats, your last SCORE is: '
-  span.className = 'score';
+  const box = document.createElement("section");
+  const span = document.createElement("span");
+  const counts = document.getElementById("counts");
+  box.className = "score-box";
+  box.textContent = "Congrats, your last SCORE is: ";
+  span.className = "score";
   span.textContent = Number(counts.textContent) * 15;
   box.appendChild(span);
   document.body.appendChild(box);
 }
 
 function countLeftTime() {
-  const leftTime = document.querySelector('.left-time');
+  const leftTime = document.querySelector(".left-time");
   let count = 59;
   const id = setInterval(() => {
     leftTime.textContent = count;
     count--;
     if (count < 0) {
-      clearInterval(id)
-      console.log('time stopped')
+      clearInterval(id);
+      console.log("time stopped");
     }
-  }, 1000)
+  }, 1000);
 }
 
 function renderInput() {
   const box = document.createElement("section");
-  const input = document.createElement('input');
-  box.className = 'input-box';
+  const input = document.createElement("input");
+  box.className = "input-box";
   input.className = "input";
   input.placeholder = "enter something here...";
-  box.appendChild(input)
+  box.appendChild(input);
   document.body.appendChild(box);
 
   return input;
@@ -124,9 +144,9 @@ function calcCountsWhenWordsMatched(input) {
 function renderCountsBox() {
   const box = document.createElement("section");
   const span = document.createElement("span");
-  box.className = 'count-box';
+  box.className = "count-box";
   box.textContent = "how many words you've killed: ";
-  box.appendChild(span)
+  box.appendChild(span);
   span.id = "counts";
   span.textContent = `0`;
   document.body.appendChild(box);
@@ -135,11 +155,11 @@ function renderCountsBox() {
 function renderLeftTime() {
   const box = document.createElement("section");
   const span = document.createElement("span");
-  box.className = 'left-time-box';
+  box.className = "left-time-box";
   box.textContent = "your left time is: ";
   span.className = "left-time";
-  span.textContent = '60';
-  box.appendChild(span)
+  span.textContent = "60";
+  box.appendChild(span);
   document.body.appendChild(box);
 }
 
@@ -161,7 +181,6 @@ function renderNodes(i) {
 
 function moveNodes(span, i) {
   let count = 0;
-
   const id = setInterval(() => {
     count += 10;
     span.style.right = count + "px";
