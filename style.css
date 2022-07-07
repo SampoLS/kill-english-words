@@ -7,6 +7,7 @@
 body {
   width: 100%;
   height: 100vh;
+  overflow: hidden;
   background: linear-gradient(to bottom, #eb5013e8, #d20c56e3);
 }
 
@@ -26,23 +27,41 @@ body {
   cursor: pointer;
 }
 
+.input-box {
+  width: 500px;
+  border-bottom: 1px solid #ddd;
+  margin: 30px auto;
+}
 .input {
+  width: 100%;
   border: none;
   outline: none;
-  padding: 10px;
+  padding: 10px 0px;
   color: white;
   background: transparent;
 }
 
-#counts, .left-time-box {
-  margin-left: 20px;
+.count-box,
+.left-time-box,
+.score-box {
+  width: 500px;
+  margin: 20px auto;
+  font-size: 20px;
   color: white;
   font-family: monaco;
+}
+#counts,
+.left-time,
+.score {
+  margin-left: 20px;
+  color: yellow;
+  font-family: monaco;
+  font-size: 30px;
 }
 
 .slipping-words {
   position: absolute;
-  margin-top: 200px;
+  margin-top: 300px;
   right: 0px;
   font-size: 30px;
   color: #ddd;
