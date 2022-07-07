@@ -168,7 +168,6 @@ function renderNodes(i) {
     letters[Math.floor(Math.random() * 25)] +
     letters[Math.ceil(Math.random() * 25)] +
     letters[Math.ceil(Math.random() * 25)];
-
   span.className = "slipping-words";
   span.style.top = i * 100 + "px";
   root.appendChild(span);
