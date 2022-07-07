@@ -10,6 +10,22 @@ body {
   background: linear-gradient(to bottom, #eb5013e8, #d20c56e3);
 }
 
+.go {
+  border: 3px solid orange;
+  border-radius: 5px;
+  padding: 20px 50px;
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  color: white;
+}
+.go:hover {
+  cursor: pointer;
+}
+
 .input {
   border: none;
   outline: none;
@@ -18,7 +34,7 @@ body {
   background: transparent;
 }
 
-#counts {
+#counts, .left-time-box {
   margin-left: 20px;
   color: white;
   font-family: monaco;

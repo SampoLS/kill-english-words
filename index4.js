@@ -2,10 +2,9 @@ const root = document.getElementById("root");
 const timer = 100;
 const elSize = 0;
 const wordsSize = 23;
-
 const numsOfWords = [];
 
-const words = [
+const letters = [
   "a",
   "b",
   "c",
@@ -34,29 +33,46 @@ const words = [
   "z",
 ];
 
+function createBtnToStartGame() {
+  const button = document.createElement("button");
+  button.textContent = "go";
+  button.className = "go";
+  document.body.appendChild(button);
+
+  button.addEventListener("click", () => {
+    main();
+    const id = setTimeout(() => {
+      document.body.removeChild(root);
+      clearTimeout(id);
+    }, 60000);
+    document.body.removeChild(button);
+  });
+}
+
+createBtnToStartGame();
+
 function main() {
   const input = renderInput();
-  countsNumsOfWords();
-  renderCountsWhenTypeIntoBar(input);
+  renderCountsBox();
+  renderLeftTime();
 
+  calcCountsWhenWordsMatched(input);
   for (let i = 0; i < 3; i++) {
     const span = renderNodes(i);
     moveNodes(span, i);
   }
 }
 
-main();
-
 function renderInput() {
   const input = document.createElement("input");
   input.className = "input";
-  input.placeholder = 'enter something here...';
+  input.placeholder = "enter something here...";
   document.body.appendChild(input);
 
   return input;
 }
 
-function renderCountsWhenTypeIntoBar(input) {
+function calcCountsWhenWordsMatched(input) {
   const span = document.getElementsByTagName("span");
   input.addEventListener("input", (e) => {
     const counts = document.getElementById("counts");
@@ -71,21 +87,29 @@ function renderCountsWhenTypeIntoBar(input) {
   });
 }
 
-function countsNumsOfWords() {
+function renderCountsBox() {
   const span = document.createElement("span");
   span.id = "counts";
   span.textContent = `how many words you've killed: 0`;
   document.body.appendChild(span);
 }
 
+function renderLeftTime() {
+  const span = document.createElement("span");
+  span.className = "left-time-box";
+  span.textContent = "your left time is: 0";
+  document.body.appendChild(span);
+}
+
 function renderNodes(i) {
   const span = document.createElement("span");
   span.textContent =
-    words[Math.floor(Math.random() * 26)] +
-    words[Math.floor(Math.random() * 26)] +
-    words[Math.floor(Math.random() * 26)] +
-    words[Math.ceil(Math.random() * 26)] +
-    words[Math.ceil(Math.random() * 26)];
+    letters[Math.floor(Math.random() * 26)] +
+    letters[Math.floor(Math.random() * 26)] +
+    letters[Math.floor(Math.random() * 26)] +
+    letters[Math.ceil(Math.random() * 26)] +
+    letters[Math.ceil(Math.random() * 26)];
+
   span.className = "slipping-words";
   span.style.top = i * 100 + "px";
   root.appendChild(span);
@@ -100,15 +124,16 @@ function moveNodes(span, i) {
     count += 10;
     span.style.right = count + "px";
     const right = Number(span.style.right.slice(0, -2));
-
-    if (right === 400) {
+    if (right === 400 && document.body.contains(root)) {
       const span = renderNodes(i);
       moveNodes(span, i);
     }
-
     if (right > screen.width + 50) {
       clearInterval(id);
       root.removeChild(span);
+      console.log("stopped");
     }
   }, timer);
+
+  return id;
 }
