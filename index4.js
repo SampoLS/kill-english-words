@@ -54,7 +54,7 @@ function clearSlideWordsWhenTimeoutAndStartGameAgain() {
   const id = setTimeout(() => {
     document.body.removeChild(root);
     clearTimeout(id);
-    console.log("removed all nodes in root");
+    // console.log("removed all nodes in root");
     showScore();
 
     const button = renderStartBtn();
@@ -124,7 +124,7 @@ function countLeftTime() {
     count--;
     if (count < 0) {
       clearInterval(id);
-      console.log("time stopped");
+      // console.log("time stopped");
     }
   }, 1000);
 }
@@ -203,7 +203,7 @@ function moveNodes(span, i) {
     if (right > screen.width + 50) {
       clearInterval(id);
       root.removeChild(span);
-      console.log("stopped");
+      // console.log("stopped");
     }
   }, timer);
 
