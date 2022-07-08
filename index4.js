@@ -47,7 +47,6 @@ startGame();
 
 function removeScore() {
   const score = document.querySelector('.score-box');
-  console.log(score)
   document.body.removeChild(score);
 }
 
@@ -144,7 +143,6 @@ function renderInput() {
 function calcCountsWhenWordsMatched(input) {
   const span = document.getElementsByTagName("span");
   const counts = document.getElementById("counts");
-  console.log(counts.textContent)
   input.addEventListener("input", (e) => {
     for (let i = 0; i < span.length; i++) {
       if (e.target.value === span[i].textContent && e.target.value !== "") {
