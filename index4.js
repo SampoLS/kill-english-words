@@ -38,25 +38,45 @@ function startGame() {
   const button = renderStartBtn();
   button.addEventListener("click", () => {
     renderUI();
-    clearNodes();
+    clearSlideWordsWhenTimeoutAndStartGameAgain();
     document.body.removeChild(button);
   });
 }
 
 startGame();
 
-function clearNodes() {
+function removeScore() {
+  const score = document.querySelector('.score-box');
+  console.log(score)
+  document.body.removeChild(score);
+}
+
+function clearSlideWordsWhenTimeoutAndStartGameAgain() {
   const id = setTimeout(() => {
     document.body.removeChild(root);
     clearTimeout(id);
     console.log("removed all nodes in root");
     showScore();
+
     const button = renderStartBtn();
     button.addEventListener("click", () => {
+      const counts = document.getElementById("counts");
+      const input = document.querySelector('input');
+
+      numsOfWords.length = 0;
+      counts.textContent = 0;
+
       document.body.removeChild(button);
       document.body.appendChild(root);
+
+      calcCountsWhenWordsMatched(input);
       renderAndMoveNodes();
       countLeftTime();
+
+      removeScore();
+
+      clearSlideWordsWhenTimeoutAndStartGameAgain();
+
     });
   }, leftTimer);
 }
@@ -87,8 +107,7 @@ function renderAndMoveNodes() {
 }
 
 function showScore() {
-  const box = document.createElement("section");
-  const span = document.createElement("span");
+  const [box, span] = createEls('section', 'span');
   const counts = document.getElementById("counts");
   box.className = "score-box";
   box.textContent = "Congrats, your last SCORE is: ";
@@ -112,8 +131,7 @@ function countLeftTime() {
 }
 
 function renderInput() {
-  const box = document.createElement("section");
-  const input = document.createElement("input");
+  const [box, input] = createEls('section', 'input');
   box.className = "input-box";
   input.className = "input";
   input.placeholder = "enter something here...";
@@ -126,6 +144,7 @@ function renderInput() {
 function calcCountsWhenWordsMatched(input) {
   const span = document.getElementsByTagName("span");
   const counts = document.getElementById("counts");
+  console.log(counts.textContent)
   input.addEventListener("input", (e) => {
     for (let i = 0; i < span.length; i++) {
       if (e.target.value === span[i].textContent && e.target.value !== "") {
@@ -139,19 +158,17 @@ function calcCountsWhenWordsMatched(input) {
 }
 
 function renderCountsBox() {
-  const box = document.createElement("section");
-  const span = document.createElement("span");
+  const [box, span] = createEls('section', 'span');
   box.className = "count-box";
   box.textContent = "how many words you've killed: ";
   box.appendChild(span);
   span.id = "counts";
-  span.textContent = `0`;
+  span.textContent = 0;
   document.body.appendChild(box);
 }
 
 function renderLeftTime() {
-  const box = document.createElement("section");
-  const span = document.createElement("span");
+  const [box, span] = createEls('section', 'span');
   box.className = "left-time-box";
   box.textContent = "your left time is: ";
   span.className = "left-time";
@@ -193,4 +210,10 @@ function moveNodes(span, i) {
   }, timer);
 
   return id;
+}
+
+function createEls(el1, el2) {
+  const parent = document.createElement(el1);
+  const child = document.createElement(el2);
+  return [parent, child];
 }
