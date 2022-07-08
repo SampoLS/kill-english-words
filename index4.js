@@ -58,6 +58,7 @@ function clearSlideWordsWhenTimeoutAndStartGameAgain() {
     showScore();
 
     const button = renderStartBtn();
+    button.textContent = 'RESTART';
     button.addEventListener("click", () => {
       const counts = document.getElementById("counts");
       const input = document.querySelector("input");
