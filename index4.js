@@ -46,7 +46,7 @@ function startGame() {
 startGame();
 
 function removeScore() {
-  const score = document.querySelector('.score-box');
+  const score = document.querySelector(".score-box");
   document.body.removeChild(score);
 }
 
@@ -60,7 +60,7 @@ function clearSlideWordsWhenTimeoutAndStartGameAgain() {
     const button = renderStartBtn();
     button.addEventListener("click", () => {
       const counts = document.getElementById("counts");
-      const input = document.querySelector('input');
+      const input = document.querySelector("input");
 
       numsOfWords.length = 0;
       counts.textContent = 0;
@@ -75,7 +75,6 @@ function clearSlideWordsWhenTimeoutAndStartGameAgain() {
       removeScore();
 
       clearSlideWordsWhenTimeoutAndStartGameAgain();
-
     });
   }, leftTimer);
 }
@@ -106,7 +105,7 @@ function renderAndMoveNodes() {
 }
 
 function showScore() {
-  const [box, span] = createEls('section', 'span');
+  const [box, span] = createEls("section", "span");
   const counts = document.getElementById("counts");
   box.className = "score-box";
   box.textContent = "Congrats, your last SCORE is: ";
@@ -130,7 +129,7 @@ function countLeftTime() {
 }
 
 function renderInput() {
-  const [box, input] = createEls('section', 'input');
+  const [box, input] = createEls("section", "input");
   box.className = "input-box";
   input.className = "input";
   input.placeholder = "enter something here...";
@@ -156,7 +155,7 @@ function calcCountsWhenWordsMatched(input) {
 }
 
 function renderCountsBox() {
-  const [box, span] = createEls('section', 'span');
+  const [box, span] = createEls("section", "span");
   box.className = "count-box";
   box.textContent = "how many words you've killed: ";
   box.appendChild(span);
@@ -166,7 +165,7 @@ function renderCountsBox() {
 }
 
 function renderLeftTime() {
-  const [box, span] = createEls('section', 'span');
+  const [box, span] = createEls("section", "span");
   box.className = "left-time-box";
   box.textContent = "your left time is: ";
   span.className = "left-time";
