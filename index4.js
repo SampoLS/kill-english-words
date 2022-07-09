@@ -61,9 +61,11 @@ function clearSlideWordsWhenTimeoutAndStartGameAgain() {
     button.addEventListener("click", () => {
       const counts = document.getElementById("counts");
       const input = document.querySelector("input");
+      const leftTime = document.querySelector('.left-time');
 
       numsOfWords.length = 0;
       counts.textContent = 0;
+      leftTime.textContent = 60;
 
       document.body.removeChild(button);
       document.body.appendChild(root);
@@ -168,7 +170,7 @@ function renderLeftTime() {
   box.className = "left-time-box";
   box.textContent = "your left time is: ";
   span.className = "left-time";
-  span.textContent = "60";
+  span.textContent = 60;
   box.appendChild(span);
   document.body.appendChild(box);
 }
