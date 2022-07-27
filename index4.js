@@ -38,7 +38,7 @@ function startGame() {
   const button = renderStartBtn();
   button.addEventListener("click", () => {
     renderUI();
-    clearSlideWordsWhenTimeoutAndStartGameAgain();
+    clearSlideWordsWhenTimeoutAndRestart();
     document.body.removeChild(button);
   });
 }
@@ -50,18 +50,18 @@ function removeScore() {
   document.body.removeChild(score);
 }
 
-function clearSlideWordsWhenTimeoutAndStartGameAgain() {
+function clearSlideWordsWhenTimeoutAndRestart() {
   const id = setTimeout(() => {
     document.body.removeChild(root);
     clearTimeout(id);
     showScore();
 
     const button = renderStartBtn();
-    button.textContent = 'RESTART';
+    button.textContent = "RESTART";
     button.addEventListener("click", () => {
       const counts = document.getElementById("counts");
       const input = document.querySelector("input");
-      const leftTime = document.querySelector('.left-time');
+      const leftTime = document.querySelector(".left-time");
 
       numsOfWords.length = 0;
       counts.textContent = 0;
