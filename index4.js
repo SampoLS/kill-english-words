@@ -45,42 +45,6 @@ function startGame() {
 
 startGame();
 
-function removeScore() {
-  const score = document.querySelector(".score-box");
-  document.body.removeChild(score);
-}
-
-function clearSlideWordsWhenTimeoutAndRestart() {
-  const id = setTimeout(() => {
-    document.body.removeChild(root);
-    clearTimeout(id);
-    showScore();
-
-    const button = renderStartBtn();
-    button.textContent = "RESTART";
-    button.addEventListener("click", () => {
-      const counts = document.getElementById("counts");
-      const input = document.querySelector("input");
-      const leftTime = document.querySelector(".left-time");
-
-      numsOfWords.length = 0;
-      counts.textContent = 0;
-      leftTime.textContent = 60;
-
-      document.body.removeChild(button);
-      document.body.appendChild(root);
-
-      calcCountsWhenWordsMatched(input);
-      renderAndMoveNodes();
-      countLeftTime();
-
-      removeScore();
-
-      clearSlideWordsWhenTimeoutAndRestart();
-    });
-  }, leftTimer);
-}
-
 function renderStartBtn() {
   const button = document.createElement("button");
   button.textContent = "Go";
@@ -99,36 +63,6 @@ function renderUI() {
   countLeftTime();
 }
 
-function renderAndMoveNodes() {
-  for (let i = 0; i < 3; i++) {
-    const span = renderNodes(i);
-    moveNodes(span, i);
-  }
-}
-
-function showScore() {
-  const [box, span] = createEls("section", "span");
-  const counts = document.getElementById("counts");
-  box.className = "score-box";
-  box.textContent = "Congrats, your last SCORE is: ";
-  span.className = "score";
-  span.textContent = Number(counts.textContent) * 15;
-  box.appendChild(span);
-  document.body.appendChild(box);
-}
-
-function countLeftTime() {
-  const leftTime = document.querySelector(".left-time");
-  let count = 59;
-  const id = setInterval(() => {
-    leftTime.textContent = count;
-    count--;
-    if (count < 0) {
-      clearInterval(id);
-    }
-  }, 1000);
-}
-
 function renderInput() {
   const [box, input] = createEls("section", "input");
   box.className = "input-box";
@@ -138,21 +72,6 @@ function renderInput() {
   document.body.appendChild(box);
 
   return input;
-}
-
-function calcCountsWhenWordsMatched(input) {
-  const span = document.getElementsByTagName("span");
-  const counts = document.getElementById("counts");
-  input.addEventListener("input", (e) => {
-    for (let i = 0; i < span.length; i++) {
-      if (e.target.value === span[i].textContent && e.target.value !== "") {
-        span[i].textContent = "";
-        numsOfWords.push(span[i].textContent);
-        counts.textContent = numsOfWords.length;
-        e.target.value = "";
-      }
-    }
-  });
 }
 
 function renderCountsBox() {
@@ -173,6 +92,28 @@ function renderLeftTime() {
   span.textContent = 60;
   box.appendChild(span);
   document.body.appendChild(box);
+}
+
+function calcCountsWhenWordsMatched(input) {
+  const span = document.getElementsByTagName("span");
+  const counts = document.getElementById("counts");
+  input.addEventListener("input", (e) => {
+    for (let i = 0; i < span.length; i++) {
+      if (e.target.value === span[i].textContent && e.target.value !== "") {
+        span[i].textContent = "";
+        numsOfWords.push(span[i].textContent);
+        counts.textContent = numsOfWords.length;
+        e.target.value = "";
+      }
+    }
+  });
+}
+
+function renderAndMoveNodes() {
+  for (let i = 0; i < 3; i++) {
+    const span = renderNodes(i);
+    moveNodes(span, i);
+  }
 }
 
 function renderNodes(i) {
@@ -207,6 +148,65 @@ function moveNodes(span, i) {
   }, timer);
 
   return id;
+}
+
+function countLeftTime() {
+  const leftTime = document.querySelector(".left-time");
+  let count = 59;
+  const id = setInterval(() => {
+    leftTime.textContent = count;
+    count--;
+    if (count < 0) {
+      clearInterval(id);
+    }
+  }, 1000);
+}
+
+function clearSlideWordsWhenTimeoutAndRestart() {
+  const id = setTimeout(() => {
+    document.body.removeChild(root);
+    clearTimeout(id);
+    showScore();
+
+    const button = renderStartBtn();
+    button.textContent = "RESTART";
+    button.addEventListener("click", () => {
+      const counts = document.getElementById("counts");
+      const input = document.querySelector("input");
+      const leftTime = document.querySelector(".left-time");
+
+      numsOfWords.length = 0;
+      counts.textContent = 0;
+      leftTime.textContent = 60;
+
+      document.body.removeChild(button);
+      document.body.appendChild(root);
+
+      calcCountsWhenWordsMatched(input);
+      renderAndMoveNodes();
+      countLeftTime();
+
+      removeScore();
+
+      clearSlideWordsWhenTimeoutAndRestart();
+    });
+  }, leftTimer);
+}
+
+function removeScore() {
+  const score = document.querySelector(".score-box");
+  document.body.removeChild(score);
+}
+
+function showScore() {
+  const [box, span] = createEls("section", "span");
+  const counts = document.getElementById("counts");
+  box.className = "score-box";
+  box.textContent = "Congrats, your last SCORE is: ";
+  span.className = "score";
+  span.textContent = Number(counts.textContent) * 15;
+  box.appendChild(span);
+  document.body.appendChild(box);
 }
 
 function createEls(el1, el2) {
