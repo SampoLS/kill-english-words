@@ -76,7 +76,7 @@ function clearSlideWordsWhenTimeoutAndRestart() {
 
       removeScore();
 
-      clearSlideWordsWhenTimeoutAndStartGameAgain();
+      clearSlideWordsWhenTimeoutAndRestart();
     });
   }, leftTimer);
 }
